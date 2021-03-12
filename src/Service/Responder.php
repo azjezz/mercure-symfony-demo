@@ -6,13 +6,10 @@ namespace App\Service;
 
 use Psl\Type;
 use Psr\Link\LinkProviderInterface;
-use SplFileInfo;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\WebLink\GenericLinkProvider;
@@ -91,22 +88,6 @@ final class Responder
         ], $context));
 
         return new JsonResponse($json, $status, $headers, true);
-    }
-
-    /**
-     * Returns a BinaryFileResponse object with original or customized file name and disposition header.
-     */
-    public function file(
-        SplFileInfo|string $file,
-        ?string $filename = null,
-        string $disposition = ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-    ): BinaryFileResponse {
-        $response = new BinaryFileResponse($file);
-
-        $filename ??= $response->getFile()->getFilename();
-        $response->setContentDisposition($disposition, $filename);
-
-        return $response;
     }
     
     public function link(Request $request, Link $link): void

@@ -1,0 +1,36 @@
+<div x-show="mopen" @click.away="mopen = false">
+    <div class="border-t border-gray-200">
+        {% if app.user %}
+            <div class="mt-3 mb-3 space-y-1">
+                <div>
+                    <a href="{{ path('user_settings') }}"
+                       class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                        Settings
+                    </a>
+                </div>
+                <div>
+                    <a href="{{ path('user_logout') }}"
+                       class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="mt-3 mb-3 space-y-1">
+                <div>
+                    <a href="{{ path('user_login') }}"
+                       class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                        Login
+                    </a>
+                </div>
+                <div>
+                    <a href="{{ path('user_register') }}"
+                       class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
+                        Register
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+        <hr class="border-t border-gray-200"/>
+    </div>
+</div>

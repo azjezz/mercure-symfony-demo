@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}#{{ room.name }} - ChitChat{% endblock %}
+
+{% block body %}
+    {% include 'components/nav.html.twig' %}
+
+    <main>
+        <div>
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+                <h3 class="text-dark">#{{ room.name }}</h3>
+
+                <div class="mt-6 mb-4 h-72 overflow-y-auto" id="messages">
+
+                </div>
+
+                <form method="POST" id="message" class="w-full">
+                    <input name="message" class="form-input w-full h-12" placeholder="chit-chat"/>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        let form = document.getElementById('message')
+        let messages = document.getElementById('messages')
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            let data = new FormData(form);
+            if (data.get('message').trim().length === 0) {
+                return;
+            }
+
+            await fetch("{{ path('message:create', {id: room.id}) }}", {
+                method: 'POST',
+                body: data
+            });
+
+            form.reset()
+        })
+
+        fetch('{{ path('chat-room:discover', {id: room.id}) }}')
+            .then(response => {
+                const hubUrl = response.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1]
+
+                const hub = new URL(hubUrl)
+                hub.searchParams.append('topic', "{{ path('chat-room:show', {id: room.id}) }}")
+
+                const eventSource = new EventSource(hub, {
+                    withCredentials: true
+                })
+
+                eventSource.addEventListener('message', (event) => {
+                    let data = JSON.parse(event.data)
+                    
+                    console.log(data)
+
+                    let container = document.createElement('div')
+                    let message = document.createElement('div')
+                    let author = document.createElement('span')
+                    let content = document.createElement('span')
+                    message.append(author, content)
+                    container.append(message)
+
+                    container.className = 'py-2'
+                    message.className = 'bg-white leading-none text-purple-600 rounded p-2 shadow text-sm'
+                    author.className = 'inline-flex bg-purple-600 text-white rounded-full h-6 px-3 justify-center items-center';
+                    content.className = 'inline-flex px-2 py-1'
+
+                    author.textContent = data.author;
+                    content.textContent = data.content;
+
+                    messages.append(container)
+                    messages.scrollTop = messages.scrollHeight
+                })
+            });
+    </script>
+
+{% endblock %}

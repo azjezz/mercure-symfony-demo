@@ -1,0 +1,47 @@
+<div>
+    <div class="md:grid md:grid-cols-3 md:gap-6 mt-10 sm:mt-0">
+        <div class="md:col-span-1">
+            <div class="px-4 sm:px-0">
+                <h3 class="text-lg font-medium text-gray-900">Security</h3>
+                <p class="mt-1 text-sm text-gray-600">Add additional security to your account by disabling password reset feature.</p>
+            </div>
+        </div>
+        <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="px-4 py-5 sm:p-6 bg-white shadow sm:rounded-lg">
+                {% if app.user.passwordResetEnabled %}
+                    <h3 class="text-lg font-medium text-gray-900">You have enabled password reset feature.</h3>
+                {% else %}
+                    <h3 class="text-lg font-medium text-gray-900">You have disabled password reset feature.</h3>
+                {% endif %}
+
+                <div class="max-w-xl text-sm text-gray-600">
+                    <p>
+                        It's important to always keep in mind that the ability to recover access to your
+                        account when you forget a password is a backdoor created as a trade-off between security and
+                        convenience.
+                    </p>
+                </div>
+                {% if app.user.passwordResetEnabled %}
+                    <form method="POST" action="{{ path('user_settings_password_reset_disable') }}">
+                        <input type="hidden" name="token" value="{{ csrf_token('user.password-reset.disable') }}">
+                        <div class="mt-5">
+                            <button type="submit" class="inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:bg-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">Disable</button>
+                        </div>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{{ path('user_settings_password_reset_enable') }}">
+                        <input type="hidden" name="token" value="{{ csrf_token('user.password-reset.enable') }}">
+                        <div class="mt-5">
+                            <button type="submit" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150">Enable</button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="hidden sm:block">
+        <div class="py-8">
+            <div class="border-t border-gray-200"></div>
+        </div>
+    </div>
+</div>

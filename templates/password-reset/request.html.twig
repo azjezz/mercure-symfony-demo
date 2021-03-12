@@ -1,0 +1,51 @@
+{% extends 'user/_layout/standalone-form.html.twig' %}
+
+{% block title %}Password Reset - Toraido{% endblock %}
+
+{% block form %}
+    {{ form_start(form) }}
+    <div class="mb-4 text-sm text-gray-600">
+        Forgot your password? No problem. Just let us know your email address and we will email you a password reset
+        link that will allow you to choose a new one.
+    </div>
+
+    {% if errors|length  >= 1 %}
+        <div class="mb-4">
+            <div class="font-medium text-red-600">Whoops! Something went wrong.</div>
+
+            <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div>
+        {{ form_label(form.email, null, {
+            'label_attr': {
+                'class': 'block font-medium text-sm text-gray-700'
+            }
+        }) }}
+        {{ form_widget(form.email, {
+            'attr': {
+                'class': 'form-input rounded-md shadow-sm mt-1 block w-full',
+                'autocomplete': 'email',
+                'autofocus': 'autofocus',
+            }
+        }) }}
+        <div class="mt-2">
+            {% for error in form.email.vars.errors %}
+                <p class="text-sm text-red-600">{{ error.message }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="flex items-center justify-end mt-4">
+        <button type="submit"
+                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 ml-4">
+            Continue
+        </button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

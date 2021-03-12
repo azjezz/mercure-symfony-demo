@@ -1,0 +1,72 @@
+<div class="md:grid md:grid-cols-3 md:gap-6 mt-10 sm:mt-0" x-data="{ open: {{ delete_attempted ? 'true' : 'false' }} }">
+    <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+            <h3 class="text-lg font-medium text-gray-900">Delete Account</h3>
+            <p class="mt-1 text-sm text-gray-600">Permanently delete your account.</p>
+        </div>
+    </div>
+    <div class="mt-5 md:mt-0 md:col-span-2">
+        <div class="px-4 py-5 sm:p-6 bg-white shadow sm:rounded-lg">
+            <div class="max-w-xl text-sm text-gray-600">
+                <p>
+                    Once your account is deleted, all of its resources and data will be permanently deleted.
+                    Before deleting your account, please download any data or information that you wish to
+                    retain.
+                </p>
+            </div>
+            <div class="mt-5">
+                <button type="button" @click="open = true" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150">Delete Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div x-show="open" class="fixed top-0 inset-x-0 px-4 pt-6 sm:px-0 sm:flex sm:items-top sm:justify-center" style="display: none;">
+        <div class="fixed inset-0 transform transition-all" style="">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:max-w-2xl" @click.away="open = false">
+            {{ form_start(delete_form) }}
+            <div class="px-6 py-4">
+                <div class="text-lg">
+                    Delete Account
+                </div>
+                <div class="mt-4">
+                    <p class="mt-1 text-gray-800">
+                        Are you sure you want to delete your account? Once your account is deleted, all of its resources and
+                        data will be permanently deleted. Please enter your password to confirm you would like to permanently
+                        delete your account.
+                    </p>
+
+                    <div class="mt-4">
+                        {{ form_label(delete_form.oldPassword, null, {
+                            'label_attr': {
+                                'class': 'block font-medium text-sm text-gray-700'
+                            }
+                        }) }}
+                        {{ form_widget(delete_form.oldPassword, {
+                            'attr': {
+                                'class': 'form-input rounded-md shadow-sm mt-1 block w-full',
+                                'autocomplete': 'current-password'
+                            }
+                        }) }}
+                        <div class="mt-2">
+                            {% for error in delete_form.vars.errors %}
+                                <p class="text-sm text-red-600">{{ error.message }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 py-4 bg-gray-100 text-right">
+                <button @click="open = false" type="button" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+                    Cancel
+                </button>
+                <button type="submit" class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-600 transition ease-in-out duration-150 ml-2">
+                    Delete Account
+                </button>
+            </div>
+            {{ form_end(delete_form) }}
+        </div>
+    </div>
+</div>
+

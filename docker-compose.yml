@@ -1,0 +1,28 @@
+database:
+    image: postgres:12.2
+    environment:
+        POSTGRES_DB: main
+        POSTGRES_USER: main
+        POSTGRES_PASSWORD: main
+    volumes_from:
+        - data
+    ports: [5432]
+
+mailer:
+    image: schickling/mailcatcher
+    ports: [1025, 1080]
+
+mercure:
+    image: dunglas/mercure
+    restart: unless-stopped
+    environment:
+        SERVER_NAME: ':80'
+        MERCURE_PUBLISHER_JWT_KEY: '!ChangeMe!'
+        MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeMe!'
+    command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
+
+data:
+    image: busybox
+    command: "true"
+    volumes:
+        - /db

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home - ChitChat{% endblock %}
+
+{% block body %}
+    {% include 'components/nav.html.twig' %}
+
+    <main>
+        <div>
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+                {% for room in rooms %}
+                    <div class="py-2">
+                        <div class="bg-white leading-none text-purple-600 rounded p-2 shadow text-sm">
+                            <a class="prefetch inline-flex px-2 py-1" href="{{ path('chat-room:show', {id: room.id}) }}">{{ room.name }}</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock %}

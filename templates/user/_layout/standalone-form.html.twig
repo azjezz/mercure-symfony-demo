@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="font-sans text-gray-900 antialiased">
+        <div class="min-h-screen flex flex-col items-center bg-gray-100">
+            <div class="my-8 sm:my-16">
+                <a class="link" href="{{ path('index') }}">
+                    <img class="max-w-xs h-52" src="{{ asset('build/images/logo.svg') }}" alt="Enter Illustrations"/>
+                </a>
+            </div>
+
+            <div class="w-full sm:max-w-md px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                {% block form %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

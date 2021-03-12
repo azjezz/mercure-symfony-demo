@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<psalm
+        totallyTyped="true"
+        strictBinaryOperands="true"
+        allowPhpStormGenerics="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+        cacheDirectory=".psalm"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <directory name="tests"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <!-- Start Dead Code Config -->
+        <UnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="src/Controller"/>
+                <directory name="src/Command"/>
+                <referencedMethod name="*::__construct"/>
+            </errorLevel>
+        </UnusedMethod>
+
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="src/Entity"/>
+                <directory name="src/Controller"/>
+                <directory name="src/Command"/>
+                <!-- Tests have lots of unused public methods - all the test methods-->
+                <directory name="tests/"/>
+                <referencedMethod name="*::__construct"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
+
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <!-- Late initialization for doctrine fixture reference repository -->
+                <directory name="src/Fixtures"/>
+                <!-- Late initialization for service container in crud controller -->
+                <directory name="src/Controller/Admin"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+
+        <MissingConstructor errorLevel="suppress">
+            <errorLevel type="suppress">
+                <directory name="src/Entity"/>
+            </errorLevel>
+        </MissingConstructor>
+
+        <MissingDependency errorLevel="suppress">
+            <errorLevel type="suppress">
+                <directory name="src/Test"/>
+            </errorLevel>
+        </MissingDependency>
+        <!-- End Dead Code Config-->
+
+        <!-- Start Vendor Issues -->
+        <InvalidDocblock>
+            <errorLevel type="suppress">
+                <file name="vendor/doctrine/orm/lib/Doctrine/ORM/EntityRepository.php"/>
+            </errorLevel>
+        </InvalidDocblock>
+        <!-- End Vendor Issues -->
+    </issueHandlers>
+    <plugins>
+        <pluginClass class="Psl\Internal\Psalm\Plugin"/>
+    </plugins>
+</psalm>

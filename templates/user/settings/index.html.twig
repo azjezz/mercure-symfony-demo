@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Settings - Toraido{% endblock %}
+
+{% block body %}
+    {% include 'components/nav.html.twig' %}
+    {% include 'components/header.html.twig' with { title: 'Settings' } %}
+
+    <main>
+        <div>
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+                {% include 'user/settings/_sections/profile.html.twig' %}
+                {% include 'user/settings/_sections/password.html.twig' %}
+                {% include 'user/settings/_sections/security.html.twig' %}
+                {% include 'user/settings/_sections/delete.html.twig' %}
+            </div>
+        </div>
+    </main>
+{% endblock %}

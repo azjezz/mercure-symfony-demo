@@ -1,0 +1,17 @@
+{% set url = url('password_reset', {token: resetToken.token}) %}
+
+<article>
+    <header>
+        <h2>Hello there!</h2>
+    </header>
+
+    <section>
+        <p>To reset your password, please visit the following url: <a href="{{ url }}">{{ url }}</a>.</p>
+        <p>This link will expire in {{ tokenLifetime|date('g') }} hour(s).</p>
+    </section>
+
+    <footer>
+        <p>Cheers!</p>
+        <p>Toraido.</p>
+    </footer>
+</article>

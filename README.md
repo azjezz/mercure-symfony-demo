@@ -3,7 +3,7 @@
 Demonstrates the usage of Mercure with Symfony. 
 
 
-### requirements
+## requirements
 
 - PHP 8
 - composer
@@ -11,7 +11,7 @@ Demonstrates the usage of Mercure with Symfony.
 - docker-compose
 - symfony binary
 
-### installation
+## installation
 
 ```shell
 composer project:install
